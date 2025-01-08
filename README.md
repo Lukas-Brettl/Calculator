@@ -1,4 +1,4 @@
-# Calculator
+# Calculator (in master branch)
 
 Easy calculator created in a short time.
 # What it can do?
