@@ -1,35 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react"
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function Calculator(){
+  const [example, setExample] = useState("")
 
-  return (
-    <>
+  function getResult(){
+    try {
+
+      if (/^[0-9+\-*/().\s]+$/.test(example)) { //testing input
+        const result = new Function(`return ${example}`)() //calculating result (someting like eval but more safe :D)
+        setExample(result.toString())
+      } else {
+        throw new Error("Neplatný vstup")
+      }
+     
+    } catch (error) {
+      setExample("Error chybný zápis")
+    }
+    
+  }
+  return(
+    <div style={{background: "#060D0D", width: "300px"}} className=" text-center p-6 py-9 rounded-lg shadow-lg">
+     
+      <input type="text"  value={example} onChange={e => setExample(e.target.value)} style={{background: "#282929"}} placeholder="Zadejte příklad: " className="text-white text-lg rounded m-2 pl-2 min-w-52 min-h-12"/>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <div>
+          <button onClick={() => setExample("")} className="bg-slate-400 font-bold rounded-full m-2 min-w-10 aspect-square">AC</button>
+          <button onClick={() => setExample(example && -example)} className="bg-slate-400 font-bold rounded-full m-2 min-w-10 aspect-square">+/-</button>
+          <button onClick={() => setExample(example && example * 0.01)} className="bg-slate-400 font-bold rounded-full m-2 min-w-10 aspect-square">%</button>
+          <button onClick={() => setExample(example && example + "/")} className="bg-orange-500 font-bold text-white rounded-full m-2 min-w-10 aspect-square">/</button>
+        </div>
+
+        <div>
+          <button onClick={() => setExample(example ? example + "7": "7")} className="bg-slate-300 font-bold rounded-full m-2 min-w-10 aspect-square">7</button>
+          <button onClick={() => setExample(example ? example + "8": "8")}  className="bg-slate-300 font-bold rounded-full m-2 min-w-10 aspect-square">8</button>
+          <button onClick={() => setExample(example ? example + "9": "9")} className="bg-slate-300 font-bold rounded-full m-2 min-w-10 aspect-square">9</button>
+          <button onClick={() => setExample(example && example + "*")} className="bg-orange-500 font-bold text-white rounded-full m-2 min-w-10 aspect-square">*</button>
+        </div>
+        
+        <div>
+          <button onClick={() => setExample(example ? example + "4": "4")} className="bg-slate-300 font-bold rounded-full m-2 min-w-10 aspect-square">4</button>
+          <button onClick={() => setExample(example ? example + "5": "5")} className="bg-slate-300 font-bold rounded-full m-2 min-w-10 aspect-square">5</button>
+          <button onClick={() => setExample(example ? example + "6": "6")} className="bg-slate-300 font-bold rounded-full m-2 min-w-10 aspect-square">6</button>
+          <button onClick={() => setExample(example && example + "-")} className="bg-orange-500 font-bold text-white rounded-full m-2 min-w-10 aspect-square">-</button>
+        </div>
+        
+        <div>
+          <button onClick={() => setExample(example ? example + "1": "1")} className="bg-slate-300 font-bold rounded-full m-2 min-w-10 aspect-square">1</button>
+          <button onClick={() => setExample(example ? example + "2": "2")} className="bg-slate-300 font-bold rounded-full m-2 min-w-10 aspect-square">2</button>
+          <button onClick={() => setExample(example ? example + "3": "3")} className="bg-slate-300 font-bold rounded-full m-2 min-w-10 aspect-square">3</button>
+          <button onClick={() => setExample(example && example + "+")} className="bg-orange-500 font-bold text-white rounded-full m-2 min-w-10 aspect-square">+</button>
+        </div>
+        
+        <div>
+          <button onClick={() => setExample(example ? example + "0": "0")} className="bg-slate-300 font-bold text-left pl-5 rounded-full m-2 min-w-24 min-h-10 ">0</button>
+          <button onClick={() => setExample(example && example + ".")} className="bg-slate-300 font-bold rounded-full m-2 min-w-10 aspect-square">.</button>
+          <button onClick={ () => getResult()} className="bg-orange-500 font-bold text-white rounded-full m-2 min-w-10 aspect-square">=</button>
+
+        </div>
+        
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
-
-export default App
